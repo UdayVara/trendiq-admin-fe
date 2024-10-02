@@ -6,9 +6,10 @@ import { CopyIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { MdLockReset } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
-import { createEnviroment, fetchEnviroments, updateEnviroment } from "@/actions/enviroment.actions";
+import { createEnviroment, deleteEnviroment, fetchEnviroments, updateEnviroment } from "@/actions/enviroment.actions";
 import { toast } from "sonner";
 import { LiaEdit } from "react-icons/lia";
+import { MdDelete } from "react-icons/md";
 import {
   Dialog,
   DialogContent,
@@ -16,14 +17,16 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+
 } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
-function page() {
+function Page() {
   const [enviroments, setEnviroments] = useState([]);
   const [open,setOpen] = useState(false)
   const [value,setValue] = useState({key:"",value:""})
   const [selectedEnv,setSelectedEnv] = useState<any>(null)
+  const [deleteEnv,setDeleteEnv] = useState<any>(null)
+  
   const getEnviroments = async () => {
     const res = await fetchEnviroments()
 
@@ -57,6 +60,22 @@ function page() {
       }else{
         toast.error(res.message)
       }
+      }
+      
+    } catch (error:any) {
+      toast.error(error?.message || "Internal Server Error")
+    }
+  }
+  const fetchDeleteEnviroment = async() => {
+    try {
+
+      const res = await deleteEnviroment({id:deleteEnv?.id})
+      if(res.success){
+        toast.success(res.message)
+        setOpen(false)
+        getEnviroments()
+      }else{
+        toast.error(res.message)
       }
       
     } catch (error:any) {
@@ -106,9 +125,16 @@ function page() {
                   disabled
                 />
                 <div className="flex flex-row items-center gap-3">
-                <CopyIcon />
-                <LiaEdit size={25} onClick={()=>{
+                <CopyIcon className="cursor-pointer" onClick={()=>{
+                  navigator.clipboard.writeText(enviroment.value)
+                  toast.success("Copied to clipboard")
+                }}/>
+                <LiaEdit className="cursor-pointer" size={25} onClick={()=>{
                   setSelectedEnv(enviroment)
+                  setOpen(true)
+                }}/>
+                <MdDelete className="cursor-pointer text-rose-600"  size={25} onClick={()=>{
+                  setDeleteEnv({id:enviroment?.id})
                   setOpen(true)
                 }}/>
                 </div>
@@ -126,12 +152,12 @@ function page() {
       
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit Enviroment</DialogTitle>
+          <DialogTitle>{deleteEnv ? "Delete" : (!selectedEnv ? "Add" : "Edit")} Enviroment</DialogTitle>
           <DialogDescription>
-            Make changes to Enviroment Variable here. Click save when you're done.
+            {!deleteEnv ? "Make changes to Enviroment Variable here. Click save when you're done." : "Are You Sure You Want to Delete ?"}
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
+        {!deleteEnv && <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
               Key
@@ -160,9 +186,19 @@ function page() {
               }}
             />
           </div>
-        </div>
+        </div>}
         <DialogFooter>
-          <Button onClick={addEditEnviroment} type="submit">Save changes</Button>
+          {!deleteEnv ? <Button onClick={addEditEnviroment} type="submit">Save changes</Button> : <Button onClick={fetchDeleteEnviroment} type="button" variant={"destructive"}>Delete</Button>}
+
+          {
+            deleteEnv && <Button onClick={()=>{
+              setOpen(false)
+              setTimeout(()=>{
+
+                setDeleteEnv(null);
+              },100)
+            }} type="button" variant={"secondary"}>Cancel</Button>
+          }
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -170,4 +206,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
