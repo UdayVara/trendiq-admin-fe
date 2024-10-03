@@ -46,7 +46,7 @@ function Header() {
             Billboards
           </Link>
           <Link
-            href={"/"}
+            href={"/categories"}
             className="text-neutral-600 dark:text-neutral-300 hover:text-black dark:hover:text-neutral-100 transition-all"
           >
             Categories
@@ -141,7 +141,7 @@ function Header() {
           Billboards
         </Link>
         <Link
-          href={"/"}
+          href={"/categories"}
           className="text-neutral-600 dark:text-neutral-300 text-lg hover:text-black dark:hover:text-neutral-100 transition-all"
         >
           Categories
