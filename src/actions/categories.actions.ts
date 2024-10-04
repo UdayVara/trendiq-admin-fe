@@ -8,7 +8,7 @@ export const fetchCategories = async () => {
 
     if (res.data?.statusCode == 200) {
       return {
-        data: res.data?.data,
+        data: res.data?.categories,
         message: "Categories Fetched Successfully",
         success: true,
       };
@@ -57,7 +57,7 @@ export const updateCategory = async (data: {
     return {success:false,message:"Internal Server Error"}
   }
 };
-export const deleteEnviroment = async (data: {
+export const deleteCategory= async (data: {
   id:string;
 }) => {
   try {

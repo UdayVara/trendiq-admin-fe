@@ -4,59 +4,85 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-
+import {format} from "date-fns"
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
+export type Category = {
   id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
+  name:string;
+  description:string,
+  createdAt:string;
+  updatedAt:string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Category>[] = [
   {
-    accessorKey: "status",
+    accessorKey: "id",
+    header: "ID",
+  },
+  {
+    accessorKey: "name",
     header: ({ column }) => {
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Status
+            Name
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>)}
   },
   {
-    accessorKey: "email",
+    accessorKey: "description",
     header: ({ column }) => {
         return (
           <Button
             variant="ghost"
+            className="text-left "
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Email
+            Description
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>)}
   },
   {
-    accessorKey: "amount",
+    accessorKey: "createdAt",
     header: ({ column }) => {
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Amount
+            Created At
             <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>)}
+          </Button>)},
+      cell({row}) {
+        return <>
+          {format(new Date(row?.original?.createdAt), "dd/MM/yyyy")}
+        </>
+      },
+  },
+  {
+    accessorKey: "updatedAt",
+    header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Updated At
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>)},
+      cell({row}) {
+        return <>
+          {format(new Date(row?.original?.updatedAt), "dd/MM/yyyy")}
+        </>
+      },
   },
   {
     id: "actions",
     header: "Actions",
-    cell: ({ row }) => {
-      const payment = row.original;
-
+    cell: ({table,row}) => {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -68,8 +94,13 @@ export const columns: ColumnDef<Payment>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
+            <DropdownMenuItem onClick={()=>{
+              (table.options.meta as any).setOpen(true);
+              (table.options.meta as any).setSelected({...row.original});
+            }}>Edit</DropdownMenuItem>
+            <DropdownMenuItem onClick={()=>{
+              (table.options.meta as any).deleteCategory(row.original.id);
+            }}>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
