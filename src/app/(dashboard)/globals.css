@@ -18,3 +18,7 @@ body {
     @apply max-w-7xl px-4 self-center;
   }
 }
+
+body {
+  pointer-events: auto !important;
+}

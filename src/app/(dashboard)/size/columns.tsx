@@ -1,0 +1,150 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { format } from "date-fns";
+// This type is used to define the shape of our data.
+// You can use a Zod schema here if you want.
+export type Size = {
+  id: string;
+  name: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  category: { id: string; name: string };
+};
+
+export const columns: ColumnDef<Size>[] = [
+  {
+    accessorKey: "id",
+    header: "ID",
+  },
+  {
+    accessorKey: "name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="block mr-auto pl-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Name
+          <ArrowUpDown className="ml-2 h-4 w-4 inline" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "description",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="block mr-auto pl-0 "
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Description
+          <ArrowUpDown className="ml-2 h-4 w-4 inline" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "category.name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="block mr-auto pl-0 "
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Category
+          <ArrowUpDown className="ml-2 h-4 w-4 inline" />
+        </Button>
+      );
+    },
+    cell({row}) {
+        return <p>{row.original.category.name}</p>
+    },
+  },
+  {
+    accessorKey: "createdAt",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="block mr-auto pl-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Created At
+          <ArrowUpDown className="ml-2 h-4 w-4 inline" />
+        </Button>
+      );
+    },
+    cell({ row }) {
+      return <>{format(new Date(row?.original?.createdAt), "dd/MM/yyyy")}</>;
+    },
+  },
+  {
+    accessorKey: "updatedAt",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="block mr-auto pl-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Updated At
+          <ArrowUpDown className="ml-2 h-4 w-4 inline" />
+        </Button>
+      );
+    },
+    cell({ row }) {
+      return <>{format(new Date(row?.original?.updatedAt), "dd/MM/yyyy")}</>;
+    },
+  },
+  {
+    id: "actions",
+    header: "Actions",
+    cell: ({ table, row }) => {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => {
+                (table.options.meta as any).setOpen(true);
+                (table.options.meta as any).setSelected({ ...row.original });
+              }}
+            >
+              Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                (table.options.meta as any).deleteSize(row.original.id);
+              }}
+            >
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
+  },
+];

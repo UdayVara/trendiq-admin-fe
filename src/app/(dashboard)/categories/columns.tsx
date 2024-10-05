@@ -19,6 +19,7 @@ export const columns: ColumnDef<Category>[] = [
   {
     accessorKey: "id",
     header: "ID",
+    
   },
   {
     accessorKey: "name",
@@ -26,10 +27,11 @@ export const columns: ColumnDef<Category>[] = [
         return (
           <Button
             variant="ghost"
+            className="block mr-auto pl-0"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Name
-            <ArrowUpDown className="ml-2 h-4 w-4" />
+            <ArrowUpDown className="ml-2 h-4 w-4 inline" />
           </Button>)}
   },
   {
@@ -38,11 +40,11 @@ export const columns: ColumnDef<Category>[] = [
         return (
           <Button
             variant="ghost"
-            className="text-left "
+            className="block mr-auto pl-0 "
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Description
-            <ArrowUpDown className="ml-2 h-4 w-4" />
+            <ArrowUpDown className="ml-2 h-4 w-4 inline" />
           </Button>)}
   },
   {
@@ -51,10 +53,11 @@ export const columns: ColumnDef<Category>[] = [
         return (
           <Button
             variant="ghost"
+            className="block mr-auto pl-0"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Created At
-            <ArrowUpDown className="ml-2 h-4 w-4" />
+            <ArrowUpDown className="ml-2 h-4 w-4 inline" />
           </Button>)},
       cell({row}) {
         return <>
@@ -68,10 +71,11 @@ export const columns: ColumnDef<Category>[] = [
         return (
           <Button
             variant="ghost"
+            className="block mr-auto pl-0"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Updated At
-            <ArrowUpDown className="ml-2 h-4 w-4" />
+            <ArrowUpDown className="ml-2 h-4 w-4 inline" />
           </Button>)},
       cell({row}) {
         return <>

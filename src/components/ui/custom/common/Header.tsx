@@ -52,7 +52,7 @@ function Header() {
             Categories
           </Link>
           <Link
-            href={"/"}
+            href={"/size"}
             className="text-neutral-600 dark:text-neutral-300 hover:text-black dark:hover:text-neutral-100 transition-all"
           >
             Sizes
@@ -147,7 +147,7 @@ function Header() {
           Categories
         </Link>
         <Link
-          href={"/"}
+          href={"/size"}
           className="text-neutral-600 dark:text-neutral-300 text-lg hover:text-black dark:hover:text-neutral-100 transition-all"
         >
           Sizes
