@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 
-import { fetchCategories } from "@/actions/categories.actions";
+import { fetchCategories } from "@/api/categories.actions";
 import { toast } from "sonner";
 import {
   Dialog,
@@ -24,7 +24,7 @@ import {
   deleteSize,
   fetchSizes,
   updateSize,
-} from "@/actions/size.actions";
+} from "@/api/size.actions";
 import {
   Select,
   SelectContent,
@@ -187,14 +187,13 @@ function CategoriesPage() {
                 Category
               </Label>
               <Select
-              
                 defaultValue={selected?.category?.id || ""}
                 onValueChange={(value) => {
                   setSize({ ...size, category: value });
                 }}
               >
                 <SelectTrigger className="w-full col-span-3">
-                  <SelectValue placeholder="Theme" />
+                  <SelectValue placeholder="Select Category" />
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((category) => (

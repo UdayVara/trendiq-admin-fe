@@ -6,7 +6,7 @@ import { CopyIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { MdLockReset } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
-import { createEnviroment, deleteEnviroment, fetchEnviroments, updateEnviroment } from "@/actions/enviroment.actions";
+import { createEnviroment, deleteEnviroment, fetchEnviroments, updateEnviroment } from "@/api/enviroment.actions";
 import { toast } from "sonner";
 import { LiaEdit } from "react-icons/lia";
 import { MdDelete } from "react-icons/md";

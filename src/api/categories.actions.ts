@@ -1,15 +1,15 @@
-"use server";
+
 
 import axiosInstance from "@/utils/axios";
 
-export const fetchSizes = async () => {
+export const fetchCategories = async () => {
   try {
-    const res = await axiosInstance.get("/size");
-
+    const res = await axiosInstance.get("/category");
+    console.log(res)
     if (res.data?.statusCode == 200) {
       return {
-        data: res.data?.sizes,
-        message: "Size Fetched Successfully",
+        data: res.data?.categories,
+        message: "Categories Fetched Successfully",
         success: true,
       };
     } else {
@@ -24,15 +24,14 @@ export const fetchSizes = async () => {
   }
 };
 
-export const createSize = async (data: {
+export const createCategory = async (data: {
   name:string,
-  description:string,
-  category:string,
+  description:string
 }) => {
   try {
-    const res = await axiosInstance.post("/size", data);
+    const res = await axiosInstance.post("/category", data);
     if (res.data?.statusCode == 201) {
-        return {success:true,message:"Size Created Successfully",new:res.data?.newSize}
+        return {success:true,message:"Category Created Successfully",new:res.data?.newCategory}
     }else{
         return {success:false,message:res?.data?.message || "Internal Server Error"}
     }
@@ -41,16 +40,15 @@ export const createSize = async (data: {
     return {success:false,message:"Internal Server Error"}
   }
 };
-export const updateSize = async (data: {
+export const updateCategory = async (data: {
   name:string,
   description:string,
-  sizeId:string,
-  category:string,
+  id:string
 }) => {
   try {
-    const res = await axiosInstance.patch("/size", data);
+    const res = await axiosInstance.patch("/category", data);
     if (res.data?.statusCode == 201) {
-        return {success:true,message:"Size Updated Successfully"}
+        return {success:true,message:"Enviroment Updated Successfully"}
     }else{
         return {success:false,message:res?.data?.message || "Internal Server Error"}
     }
@@ -59,13 +57,13 @@ export const updateSize = async (data: {
     return {success:false,message:"Internal Server Error"}
   }
 };
-export const deleteSize= async (data: {
+export const deleteCategory= async (data: {
   id:string;
 }) => {
   try {
-    const res = await axiosInstance.delete(`/size/${data.id}`);
+    const res = await axiosInstance.delete(`/category/${data.id}`);
     if (res.data?.statusCode == 201) {
-        return {success:true,message:"Size Deleted Successfully"}
+        return {success:true,message:"Category Deleted Successfully"}
     }else{
         return {success:false,message:res?.data?.message || "Internal Server Error"}
     }

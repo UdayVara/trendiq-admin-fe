@@ -130,48 +130,56 @@ function Header() {
       >
         <Link
           href={"/"}
+          onClick={()=>setOpen(false)}
           className="text-neutral-600 dark:text-neutral-300 text-lg hover:text-black dark:hover:text-neutral-100 transition-all "
         >
           Overview
         </Link>
         <Link
           href={"/"}
+          onClick={()=>setOpen(false)}
           className="text-neutral-600 dark:text-neutral-300 text-lg hover:text-black dark:hover:text-neutral-100 transition-all"
         >
           Billboards
         </Link>
         <Link
           href={"/categories"}
+          onClick={()=>setOpen(false)}
           className="text-neutral-600 dark:text-neutral-300 text-lg hover:text-black dark:hover:text-neutral-100 transition-all"
         >
           Categories
         </Link>
         <Link
           href={"/size"}
+          onClick={()=>setOpen(false)}
           className="text-neutral-600 dark:text-neutral-300 text-lg hover:text-black dark:hover:text-neutral-100 transition-all"
         >
           Sizes
         </Link>
         <Link
           href={"/"}
+          onClick={()=>setOpen(false)}
           className="text-neutral-600 dark:text-neutral-300 text-lg hover:text-black dark:hover:text-neutral-100 transition-all"
         >
           Colors
         </Link>
         <Link
           href={"/"}
+          onClick={()=>setOpen(false)}
           className="text-neutral-600 dark:text-neutral-300 text-lg hover:text-black dark:hover:text-neutral-100 transition-all"
         >
           Products
         </Link>
         <Link
           href={"/"}
+          onClick={()=>setOpen(false)}
           className="text-neutral-600 dark:text-neutral-300 text-lg hover:text-black dark:hover:text-neutral-100 transition-all"
         >
           Orders
         </Link>
         <Link
           href={"/settings"}
+          onClick={()=>setOpen(false)}
           className="text-neutral-600 dark:text-neutral-300 text-lg hover:text-black dark:hover:text-neutral-100 transition-all"
         >
           Settings

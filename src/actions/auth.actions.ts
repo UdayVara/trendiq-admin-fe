@@ -1,6 +1,6 @@
 "use server"
 
-import { signIn } from "@/auth"
+import { auth, signIn } from "@/auth"
 import { SigninSchemaType } from "@/schemas/signin.schema"
 
 
@@ -21,3 +21,6 @@ export const signInAdmin = async(data:SigninSchemaType) => {
     }
 }
 
+export const getUser = async() => {
+    return await auth();
+}

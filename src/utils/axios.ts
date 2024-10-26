@@ -1,3 +1,4 @@
+import { getUser } from "@/actions/auth.actions";
 import { auth } from "@/auth";
 import axios from "axios";
 
@@ -14,12 +15,12 @@ axiosInstance.interceptors.request.use(
       const userObj = await auth();
       const user = userObj?.user
       if (user) {
-        const user = await auth();
-        access_token = user?.user?.token  || ''
+        access_token = user?.token  || ''
       }
     } else {
       if(typeof localStorage !== 'undefined'){
-        access_token = localStorage && localStorage.getItem('access_token') || ''
+        const user = await getUser()
+        access_token = user?.user?.token || ''
       }
     }
     console.log(access_token)

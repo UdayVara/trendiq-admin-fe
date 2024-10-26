@@ -1,15 +1,17 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useContext } from "react";
 import Logo from "@/assets/Images/logo.png";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { SigninSchema, SigninSchemaType } from "@/schemas/signin.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signInAdmin } from "@/actions/auth.actions";
+import { getUser, signInAdmin } from "@/actions/auth.actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { AuthContext } from "@/context/auth.context";
+
 function SigninPage() {
   const {
     register,
@@ -17,6 +19,7 @@ function SigninPage() {
     formState: { errors },
   } = useForm<SigninSchemaType>({ resolver: zodResolver(SigninSchema) });
   const router = useRouter();
+  const result = useContext(AuthContext);
   const handleSubmitForm: SubmitHandler<SigninSchemaType> = async (
     submitData
   ) => {
@@ -24,7 +27,9 @@ function SigninPage() {
       const res = await signInAdmin(submitData);
       console.debug("res", res);
       toast.success(res.message);
-      router.replace("/")
+      router.replace("/");
+      const user = await getUser();
+      result?.setUser(user?.user || null);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.debug("error", error);

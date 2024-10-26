@@ -9,7 +9,7 @@ import {
   deleteCategory,
   fetchCategories,
   updateCategory,
-} from "@/actions/categories.actions";
+} from "@/api/categories.actions";
 import { toast } from "sonner";
 import {
   Dialog,

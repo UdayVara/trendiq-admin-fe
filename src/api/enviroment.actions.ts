@@ -1,15 +1,15 @@
-"use server";
+
 
 import axiosInstance from "@/utils/axios";
 
-export const fetchCategories = async () => {
+export const fetchEnviroments = async () => {
   try {
-    const res = await axiosInstance.get("/category");
+    const res = await axiosInstance.get("/enviroment");
 
     if (res.data?.statusCode == 200) {
       return {
-        data: res.data?.categories,
-        message: "Categories Fetched Successfully",
+        data: res.data?.data,
+        message: "Enviroments Fetched Successfully",
         success: true,
       };
     } else {
@@ -24,14 +24,14 @@ export const fetchCategories = async () => {
   }
 };
 
-export const createCategory = async (data: {
-  name:string,
-  description:string
+export const createEnviroment = async (data: {
+  key: string;
+  value: string;
 }) => {
   try {
-    const res = await axiosInstance.post("/category", data);
+    const res = await axiosInstance.post("/enviroment", data);
     if (res.data?.statusCode == 201) {
-        return {success:true,message:"Category Created Successfully",new:res.data?.newCategory}
+        return {success:true,message:"Enviroment Created Successfully"}
     }else{
         return {success:false,message:res?.data?.message || "Internal Server Error"}
     }
@@ -40,13 +40,13 @@ export const createCategory = async (data: {
     return {success:false,message:"Internal Server Error"}
   }
 };
-export const updateCategory = async (data: {
-  name:string,
-  description:string,
-  id:string
+export const updateEnviroment = async (data: {
+  key: string;
+  value: string;
+  id:string;
 }) => {
   try {
-    const res = await axiosInstance.patch("/category", data);
+    const res = await axiosInstance.patch("/enviroment", data);
     if (res.data?.statusCode == 201) {
         return {success:true,message:"Enviroment Updated Successfully"}
     }else{
@@ -57,13 +57,13 @@ export const updateCategory = async (data: {
     return {success:false,message:"Internal Server Error"}
   }
 };
-export const deleteCategory= async (data: {
+export const deleteEnviroment = async (data: {
   id:string;
 }) => {
   try {
-    const res = await axiosInstance.delete(`/category/${data.id}`);
+    const res = await axiosInstance.delete(`/enviroment/${data.id}`);
     if (res.data?.statusCode == 201) {
-        return {success:true,message:"Category Deleted Successfully"}
+        return {success:true,message:"Enviroment Deleted Successfully"}
     }else{
         return {success:false,message:res?.data?.message || "Internal Server Error"}
     }
